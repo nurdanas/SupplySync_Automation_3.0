@@ -1,25 +1,33 @@
 package tests;
 
-import org.junit.jupiter.api.*;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.OrdersPage;
 import pages.ProjectLoginPage;
 import utils.BaseUI;
 import utils.ConfigurationReader;
 import utils.Driver;
-public class OrdersTest extends BaseUI {
+
+
+public class OrdersTest extends ProjectLoginPage {
     ProjectLoginPage projectLoginPage = new ProjectLoginPage();
-    @BeforeEach
+    @BeforeMethod
     public void setUp() {
+
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+
         projectLoginPage.login(
                 ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password")
         );
     }
 
-    @Test
+    @Test (groups = {"smoke", "regression"})
     void orders() {
         OrdersPage ordersPage = new OrdersPage(Driver.getDriver());
         ordersPage.goToOrders("elima", "11122023","11102026");
-        Assertions.assertEquals(Driver.getDriver().getCurrentUrl(), "https://supplysync.us/dashboard/hostOrders");
+        Assert.assertEquals(Driver.getDriver().getCurrentUrl(), "https://supplysync.us/dashboard/hostOrders");
     }
 }
