@@ -12,34 +12,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Driver {
-
     static WebDriver driver;
 
-    public static WebDriver getDriver(){
-
+    public static WebDriver getDriver() {
         String browser = ConfigurationReader.getProperty("browser");
-
         if (driver != null) {
             return driver;
         }
 
         ChromeOptions options = new ChromeOptions();
-
         Map<String, Object> prefs = new HashMap<>();
-
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
         prefs.put("profile.password_manager_leak_detection", false);
         prefs.put("safebrowsing.enabled", false);
         prefs.put("safebrowsing.disable_download_protection", true);
-
         options.setExperimentalOption("prefs", prefs);
-
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-extensions");
 
-        switch (browser){
+        switch (browser) {
             case "chrome":
                 driver = new ChromeDriver(options);
                 break;
@@ -56,11 +49,15 @@ public class Driver {
                 throw new IllegalArgumentException
                         ("please provide the browser name from following options: chrome, firefox, safari, edge");
         }
-
         driver.manage().window().maximize();
-
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-
         return driver;
+    }
+
+    public static void closeDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
     }
 }

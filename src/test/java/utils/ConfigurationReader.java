@@ -8,7 +8,7 @@ import java.util.Properties;
 public class ConfigurationReader {
     public static String getProperty(String key) {
 
-        File file = new File("src/test/resources/configurations.properties");
+        File file = new File("src/test/resources/config.properties");
         Properties properties = new Properties();
 
         try {

@@ -13,6 +13,7 @@ import utils.Driver;
 
 import java.time.Duration;
 
+@Test (groups = "regression")
 public class RegionsTests extends BaseUI {
 //  Aiperi
 
@@ -49,10 +50,7 @@ public class RegionsTests extends BaseUI {
 
     @AfterClass
     public void tearDown() {
-        if (Driver.getDriver() != null) {
-            Driver.getDriver().quit();
-            Driver.driver = null;
-        }
+        Driver.closeDriver();
     }
 
     private void waitForBackdropToDisappear() {
