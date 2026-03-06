@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.MastersPage;
 //import pages.ProjectLoginPage;
 import utils.BaseUI;
@@ -22,7 +19,7 @@ public class MastersTests extends BaseUI {
     MastersPage mastersPage;
     Faker faker;
 
-    @BeforeClass
+    @BeforeClass (alwaysRun = true)
     public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
 
@@ -46,18 +43,19 @@ public class MastersTests extends BaseUI {
                 By.xpath("//span[contains(text(),'Regions')]")));
     }
 
-//    @AfterClass
-//    public void tearDown() {
-//        Driver.closeDriver();
-//    }
+    @AfterClass (alwaysRun = true)
+    public void tearDown() {
+        Driver.closeDriver();
+    }
 
-    @BeforeMethod
+    @BeforeMethod (alwaysRun = true)
     public void initPages() {
         mastersPage = new MastersPage();
         faker = new Faker();
     }
 
-    @Test
+
+    @Test (groups = "smoke", priority = 0)
     public void createNewMasterSuccessTest() {
         waitAndClick(mastersPage.mastersTitle);
 
@@ -77,7 +75,7 @@ public class MastersTests extends BaseUI {
         Assert.assertTrue(mastersPage.verifyTheNewMasterIsCreated(emailSaved));
     }
 
-    @Test
+    @Test (priority = 1)
     public void createNewMasterFailTest() {
         waitAndClick(mastersPage.mastersTitle);
 
@@ -88,10 +86,8 @@ public class MastersTests extends BaseUI {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("Create"));
     }
 
-    @Test
+    @Test(priority = 2)
     public void createNewMasterCancelTest() {
-        waitAndClick(mastersPage.mastersTitle);
-        waitAndClick(mastersPage.createMastersButton);
         waitAndClick(mastersPage.masterCancelButton);
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("Create=false"));
     }

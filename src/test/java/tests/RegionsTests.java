@@ -19,7 +19,7 @@ public class RegionsTests extends BaseUI {
 
     RegionsPage regionsPage;
 
-    @BeforeClass
+    @BeforeClass (alwaysRun = true)
     public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
 
@@ -43,12 +43,12 @@ public class RegionsTests extends BaseUI {
                 By.xpath("//span[contains(text(),'Regions')]")));
     }
 
-    @BeforeMethod
+    @BeforeMethod (alwaysRun = true)
     public void initPages() {
         regionsPage = new RegionsPage();
     }
 
-    @AfterClass
+    @AfterClass (alwaysRun = true)
     public void tearDown() {
         Driver.closeDriver();
     }
@@ -62,7 +62,7 @@ public class RegionsTests extends BaseUI {
         }
     }
 
-    @Test(description = "Verify that Regions module opens successfully")
+    @Test(groups = "smoke", description = "Verify that Regions module opens successfully")
     public void shouldOpenRegionsModule() {
         jsClick(regionsPage.regionsMenuItem);
         waitUntilVisible(10, regionsPage.createRegionBtn);
@@ -103,7 +103,7 @@ public class RegionsTests extends BaseUI {
         softAssert.assertAll();
     }
 
-    @Test(description = "Verify that a region can be deleted")
+    @Test(groups = "smoke", description = "Verify that a region can be deleted")
     public void shouldDeleteRegionSuccessfully() {
         String regionToDelete = "Alaska";
 
