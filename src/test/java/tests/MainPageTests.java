@@ -28,6 +28,7 @@ public class MainPageTests extends BaseUI {
         );
     }
 
+
     @Test (groups = {"smoke", "regression"})
     public void administratorSignedOut() {
         explicitWait(20).until(ExpectedConditions.urlContains("dashboard"));

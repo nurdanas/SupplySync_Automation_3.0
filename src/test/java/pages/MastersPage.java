@@ -17,8 +17,8 @@ public class MastersPage extends BaseUI {
     public MastersPage(){
         PageFactory.initElements(driver, this);}
 
-    @FindBy(xpath = "//span[contains(., 'Masters')]")
-    public WebElement mastersTitle;
+//    @FindBy(xpath = "//span[contains(., 'Masters')]")
+//    public WebElement mastersTitle;
 
     @FindBy (xpath = "//button[contains(., 'Create Master')]")
     public WebElement createMastersButton;

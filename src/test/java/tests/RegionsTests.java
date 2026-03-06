@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import pages.LoginPage;
+import pages.MainPage;
 import pages.RegionsPage;
 import utils.BaseUI;
 import utils.ConfigurationReader;
@@ -15,40 +17,23 @@ import java.time.Duration;
 
 @Test (groups = "regression")
 public class RegionsTests extends BaseUI {
-//  Aiperi
 
+    LoginPage loginPage = new LoginPage();
+    MainPage mainPage;
     RegionsPage regionsPage;
 
-    @BeforeClass (alwaysRun = true)
+    @BeforeMethod (alwaysRun = true)
     public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(15));
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='email' or @name='email' or @id='email']")));
-        Driver.getDriver()
-                .findElement(By.xpath("//input[@type='email' or @name='email' or @id='email']"))
-                .sendKeys(ConfigurationReader.getProperty("username"));
-
-        Driver.getDriver()
-                .findElement(By.xpath("//input[@type='password' or @name='password' or @id='password']"))
-                .sendKeys(ConfigurationReader.getProperty("password"));
-
-        Driver.getDriver()
-                .findElement(By.xpath("//button[@type='submit']"))
-                .click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//span[contains(text(),'Regions')]")));
-    }
-
-    @BeforeMethod (alwaysRun = true)
-    public void initPages() {
+        loginPage = new LoginPage();
+        mainPage = new MainPage();
         regionsPage = new RegionsPage();
+        loginPage.login(
+                ConfigurationReader.getProperty("username"),
+                ConfigurationReader.getProperty("password"));
     }
 
-    @AfterClass (alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         Driver.closeDriver();
     }

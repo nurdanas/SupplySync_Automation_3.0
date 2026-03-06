@@ -8,9 +8,10 @@
             </run>
         </groups>
         <classes>
+            <class name="tests.MainPageTests"></class>
             <class name="tests.RegionsTests"/>
+            <class name="tests.OrdersTest"/>
             <class name="tests.MastersTests"/>
         </classes>
     </test>
-
 </suite>

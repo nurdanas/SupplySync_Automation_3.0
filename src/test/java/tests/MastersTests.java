@@ -1,63 +1,43 @@
 package tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pages.LoginPage;
+import pages.MainPage;
 import pages.MastersPage;
-//import pages.ProjectLoginPage;
 import utils.BaseUI;
 import utils.ConfigurationReader;
 import utils.Driver;
 import com.github.javafaker.Faker;
-import java.time.Duration;
-
 
 @Test (groups = "regression")
 public class MastersTests extends BaseUI {
-    MastersPage mastersPage;
     Faker faker;
-
-    @BeforeClass (alwaysRun = true)
-    public void setUp() {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(15));
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='email' or @name='email' or @id='email']")));
-        Driver.getDriver()
-                .findElement(By.xpath("//input[@type='email' or @name='email' or @id='email']"))
-                .sendKeys(ConfigurationReader.getProperty("username"));
-
-        Driver.getDriver()
-                .findElement(By.xpath("//input[@type='password' or @name='password' or @id='password']"))
-                .sendKeys(ConfigurationReader.getProperty("password"));
-
-        Driver.getDriver()
-                .findElement(By.xpath("//button[@type='submit']"))
-                .click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//span[contains(text(),'Regions')]")));
-    }
-
-    @AfterClass (alwaysRun = true)
-    public void tearDown() {
-        Driver.closeDriver();
-    }
+    LoginPage loginPage;
+    MainPage mainPage;
+    MastersPage mastersPage;
 
     @BeforeMethod (alwaysRun = true)
-    public void initPages() {
-        mastersPage = new MastersPage();
+    public void setUp() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         faker = new Faker();
+        loginPage = new LoginPage();
+        mainPage = new MainPage();
+        mastersPage = new MastersPage();
+        loginPage.login(
+                ConfigurationReader.getProperty("username"),
+                ConfigurationReader.getProperty("password"));
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        Driver.closeDriver();
     }
 
 
     @Test (groups = "smoke", priority = 0)
     public void createNewMasterSuccessTest() {
-        waitAndClick(mastersPage.mastersTitle);
+        waitAndClick(mainPage.mastersPage);
 
         waitAndClick(mastersPage.createMastersButton);
         clearAndSendKeys(mastersPage.mastersNameInput, faker.name().firstName());
@@ -77,7 +57,7 @@ public class MastersTests extends BaseUI {
 
     @Test (priority = 1)
     public void createNewMasterFailTest() {
-        waitAndClick(mastersPage.mastersTitle);
+        waitAndClick(mainPage.mastersPage);
 
         waitAndClick(mastersPage.createMastersButton);
         String emailSaved = faker.internet().emailAddress();
@@ -88,6 +68,8 @@ public class MastersTests extends BaseUI {
 
     @Test(priority = 2)
     public void createNewMasterCancelTest() {
+        waitAndClick(mainPage.mastersPage);
+        waitAndClick(mastersPage.createMastersButton);
         waitAndClick(mastersPage.masterCancelButton);
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("Create=false"));
     }
