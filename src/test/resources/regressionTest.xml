@@ -1,14 +1,15 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Regression suite">
-    <test name="Regression test">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Regions Test Suite">
+    <test name="Regions Tests">
         <groups>
             <run>
                 <include name="regression"/>
             </run>
         </groups>
-
         <classes>
-            <class name="tests.MainPageTests"/>
+            <class name="tests.RegionsTests"/>
+            <class name="tests.MastersTests"/>
         </classes>
     </test>
 
