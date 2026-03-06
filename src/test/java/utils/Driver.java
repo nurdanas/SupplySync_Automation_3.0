@@ -12,7 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Driver {
-
+    /*
+ WebDriver driver = new ChromeDriver();
+ WebDriver driver = Driver.getDriver()
+  */
     static WebDriver driver;
 
     public static WebDriver getDriver(){
@@ -59,15 +62,18 @@ public class Driver {
 
         driver.manage().window().maximize();
 
+        // this waits for page to fully load (safe to mix with explicit wait)
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
         return driver;
     }
-
     public static void closeDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
+        if (driver != null) {      // si el driver existe
+            driver.quit();          // cierra el navegador
+            driver = null;          // reinicia para futuras llamadas
         }
     }
 }
+
+
+

@@ -10,10 +10,18 @@ import java.time.Duration;
 import java.util.Random;
 
 public class BaseUI {
+
+    public static void main(String[] args) {
+        String url = ConfigurationReader.getProperty("url");
+        System.out.println("URL leída: " + url);
+    }
+    // ----------------------------------------------------------
+
     public void waitAndClick(WebElement element){
         waitUntilClickable(20, element);
         element.click();
     }
+
 
     /**
      * This method will wait for element to become visible
@@ -69,3 +77,6 @@ public class BaseUI {
 
 
 }
+
+
+
