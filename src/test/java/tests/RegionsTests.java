@@ -47,13 +47,13 @@ public class RegionsTests extends BaseUI {
         regionsPage = new RegionsPage();
     }
 
-    @AfterClass
-    public void tearDown() {
-        if (Driver.getDriver() != null) {
-            Driver.getDriver().quit();
-            Driver.driver = null;
-        }
-    }
+//    @AfterClass
+//    public void tearDown() {
+//        if (Driver.getDriver() != null) {
+//            Driver.getDriver().quit();
+//            Driver.driver = null;
+//        }
+//    }
 
     private void waitForBackdropToDisappear() {
         try {

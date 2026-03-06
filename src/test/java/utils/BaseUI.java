@@ -61,6 +61,11 @@ public class BaseUI {
         waitAndClick(Driver.getDriver().findElements(optionsLocator).get(randomIndex));
     }
 
+//    public void scrollToElement(WebElement element){
+//        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+//        js.executeScript("arguments[0].scrollIntoView(true);", element);
+//    }
+
 
 
 }
