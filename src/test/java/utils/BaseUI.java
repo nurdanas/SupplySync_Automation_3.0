@@ -15,6 +15,11 @@ public class BaseUI {
         element.click();
     }
 
+    public void waitAndSendKeys(WebElement element, String keys){
+        waitUntilVisible(20, element);
+        element.sendKeys(keys);
+    }
+
     /**
      * This method will wait for element to become visible
      * then it clears existing value and sends new keys
