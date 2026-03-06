@@ -10,15 +10,18 @@ import java.time.Duration;
 import java.util.Random;
 
 public class BaseUI {
+
+    public static void main(String[] args) {
+        String url = ConfigurationReader.getProperty("url");
+        System.out.println("URL leída: " + url);
+    }
+    // ----------------------------------------------------------
+
     public void waitAndClick(WebElement element){
         waitUntilClickable(20, element);
         element.click();
     }
 
-    public void waitAndSendKeys(WebElement element, String keys){
-        waitUntilVisible(20, element);
-        element.sendKeys(keys);
-    }
 
     /**
      * This method will wait for element to become visible
@@ -63,27 +66,12 @@ public class BaseUI {
         waitAndClick(dropdown);
         explicitWait(20).until(ExpectedConditions.numberOfElementsToBeMoreThan(optionsLocator, 1));
         int randomIndex = new Random().nextInt(0, Driver.getDriver().findElements(optionsLocator).size());
-        safeJSClick(Driver.getDriver().findElements(optionsLocator).get(randomIndex), 3);
+        waitAndClick(Driver.getDriver().findElements(optionsLocator).get(randomIndex));
     }
 
 
-    public static boolean safeJSClick(WebElement element, int maxRetries) {
-
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-
-        for (int i = 1; i <= maxRetries; i++) {
-            try {
-                js.executeScript("arguments[0].click();", element);
-                System.out.println("Successfully clicked element on attempt #" + i);
-                return true; // Exit loop and method on success
-            } catch (Exception e) {
-                System.err.println("Attempt #" + i + " failed to click element: " + e.getMessage());
-                // Optional: Add a short Thread.sleep(500) here if the page is mid-render
-            }
-        }
-
-        System.err.println("Failed to click element after " + maxRetries + " attempts.");
-        return false;
-    }
 
 }
+
+
+
