@@ -48,6 +48,13 @@ public class RegionsTests extends BaseUI {
         regionsPage = new RegionsPage();
     }
 
+//    @AfterClass
+//    public void tearDown() {
+//        if (Driver.getDriver() != null) {
+//            Driver.getDriver().quit();
+//            Driver.driver = null;
+//        }
+//    }
     @AfterClass (alwaysRun = true)
     public void tearDown() {
         Driver.closeDriver();
