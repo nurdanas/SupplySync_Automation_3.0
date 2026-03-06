@@ -35,7 +35,11 @@ public class MastersTests extends BaseUI {
     }
 
 
-    @Test (groups = "smoke", priority = 0)
+    @Test (groups = "examples")
+    public void messagePrint (){
+        System.out.println("Masters page message");
+    }
+    @Test (groups = "smoke", priority = 1)
     public void createNewMasterSuccessTest() {
         waitAndClick(mainPage.mastersPage);
 
@@ -55,7 +59,7 @@ public class MastersTests extends BaseUI {
         Assert.assertTrue(mastersPage.verifyTheNewMasterIsCreated(emailSaved));
     }
 
-    @Test (priority = 1)
+    @Test (priority = 2, dependsOnMethods = "createNewMasterSuccessTest")
     public void createNewMasterFailTest() {
         waitAndClick(mainPage.mastersPage);
 
@@ -66,7 +70,7 @@ public class MastersTests extends BaseUI {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("Create"));
     }
 
-    @Test(priority = 2)
+    @Test(priority = 3, dependsOnMethods = "createNewMasterSuccessTest")
     public void createNewMasterCancelTest() {
         waitAndClick(mainPage.mastersPage);
         waitAndClick(mastersPage.createMastersButton);

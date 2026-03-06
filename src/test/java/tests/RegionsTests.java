@@ -24,7 +24,6 @@ public class RegionsTests extends BaseUI {
 
     @BeforeMethod (alwaysRun = true)
     public void setUp() {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         loginPage = new LoginPage();
         mainPage = new MainPage();
         regionsPage = new RegionsPage();
@@ -47,7 +46,7 @@ public class RegionsTests extends BaseUI {
         }
     }
 
-    @Test(groups = "smoke", description = "Verify that Regions module opens successfully")
+    @Test(groups = "examples", description = "Verify that Regions module opens successfully")
     public void shouldOpenRegionsModule() {
         jsClick(regionsPage.regionsMenuItem);
         waitUntilVisible(10, regionsPage.createRegionBtn);
@@ -56,9 +55,10 @@ public class RegionsTests extends BaseUI {
                 regionsPage.createRegionBtn.isDisplayed(),
                 "Create Region button is not visible after opening Regions module"
         );
+
     }
 
-    @Test(description = "Verify that a region can be edited")
+    @Test(groups = "examples", description = "Verify that a region can be edited")
     public void shouldEditRegionSuccessfully() {
         SoftAssert softAssert = new SoftAssert();
         String updatedName = "Alaska";

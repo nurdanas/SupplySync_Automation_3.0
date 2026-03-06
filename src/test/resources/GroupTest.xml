@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Groups Test Suite">
+    <test name="Groups Test">
+        <groups>
+            <run>
+                <include name="examples"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.MainPageTests"></class>
+            <class name="tests.RegionsTests"/>
+            <class name="tests.MastersTests"/>
+            <class name="tests.BranchTests"></class>
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="listeners.TimingListener"></listener>
+    </listeners>
+    <!--    Total execution time: 19 seconds instead of 41 seconds-->
+</suite>

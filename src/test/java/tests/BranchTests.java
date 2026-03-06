@@ -1,42 +1,46 @@
 package tests;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import pages.BranchPage;
 import pages.LoginPage;
 import pages.MainPage;
-import pages.OrdersPage;
+import utils.BaseUI;
 import utils.ConfigurationReader;
 import utils.Driver;
 
-
-public class OrdersTest {
+@Test(groups = "regression")
+public class BranchTests extends BaseUI {
     LoginPage loginPage = new LoginPage();
     MainPage mainPage;
-
+    BranchPage branchPage;
 
     @BeforeMethod (alwaysRun = true)
     public void setUp() {
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         loginPage = new LoginPage();
         mainPage = new MainPage();
+        branchPage = new BranchPage();
         loginPage.login(
                 ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
-    }
-
-    @Test (groups = {"smoke", "regression"})
-    void orders() {
-
-        OrdersPage ordersPage = new OrdersPage(Driver.getDriver());
-        ordersPage.goToOrders("elima", "11122023","11102026");
-        Assert.assertEquals(Driver.getDriver().getCurrentUrl(), "https://supplysync.us/dashboard/hostOrders");
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         Driver.closeDriver();
     }
+
+    @Test (groups = {"smoke", "examples"})
+    public void validateUserCanCreateBranch(){
+        branchPage.createCompanyBranch("QA Solution","codewise@gmail.com",
+                "2250 E Devon Ave", "312 666 9988","Des Plaines",
+                "Illinois","CodeWise");
+        Assert.assertEquals(branchPage.getSuccessMessage(),"Branch successfully created");
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("=false"));
+    }
+
+
+
+
 }

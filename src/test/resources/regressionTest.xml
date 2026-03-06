@@ -1,18 +1,19 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Regions Test Suite">
-    <test name="Regions Tests">
+<suite name="Regression Test Suite" parallel="classes" thread-count="6">
+    <test name="Regression Test">
         <groups>
             <run>
                 <include name="regression"/>
             </run>
         </groups>
-        <classes>
-            <class name="tests.MainPageTests"></class>
-            <class name="tests.RegionsTests"/>
-            <class name="tests.OrdersTest"/>
-            <class name="tests.MastersTests"/>
-            <class name="tests.ProjectLoginTests"></class>
-        </classes>
+        <packages>
+            <package name="tests"></package>
+        </packages>
     </test>
+    <listeners>
+        <listener class-name="listeners.TimingListener"></listener>
+    </listeners>
+<!--    Total execution time: 20 seconds instead of 1:17 seconds-->
+
 </suite>

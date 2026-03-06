@@ -1,6 +1,6 @@
 package tests;
 
-
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -17,7 +17,6 @@ public class MainPageTests extends BaseUI {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         loginPage = new LoginPage();
         mainPage = new MainPage();
@@ -57,7 +56,7 @@ public class MainPageTests extends BaseUI {
         Assert.assertTrue(mainPage.exitMessage.isDisplayed());
     }
 
-    @Test (groups = "regression")
+    @Test (groups = {"regression", "examples"})
     public void windowMessageMisspell() {
         waitAndClick(mainPage.administratorBtn);
         waitAndClick(mainPage.exitBtn);

@@ -12,20 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Driver {
-    /*
- WebDriver driver = new ChromeDriver();
- WebDriver driver = Driver.getDriver()
-  */
-    static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
-    public static WebDriver getDriver(){
+    public static WebDriver getDriver() {
 
         String browser = ConfigurationReader.getProperty("browser");
+        boolean headless = Boolean.parseBoolean(ConfigurationReader.getProperty("headless"));
 
-        if (driver != null) {
-            return driver;
+        if (driverPool.get() != null) {
+            return driverPool.get();
         }
 
+        WebDriver driver;
+
+        // Handle browser with Chrome options
         ChromeOptions options = new ChromeOptions();
 
         Map<String, Object> prefs = new HashMap<>();
@@ -42,7 +42,16 @@ public class Driver {
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-extensions");
 
-        switch (browser){
+        if (headless) {
+            options.addArguments("--headless=new");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-features=PaintHolding");
+        }
+
+        switch (browser) {
             case "chrome":
                 driver = new ChromeDriver(options);
                 break;
@@ -60,17 +69,23 @@ public class Driver {
                         ("please provide the browser name from following options: chrome, firefox, safari, edge");
         }
 
-        driver.manage().window().maximize();
+        // Don't maximize in headless
+        if (!headless) {
+            driver.manage().window().maximize();
+        }
 
-        // this waits for page to fully load (safe to mix with explicit wait)
+        //this waits for page to fully loaded
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
 
-        return driver;
+        driverPool.set(driver);
+        return driverPool.get();
     }
+
     public static void closeDriver() {
-        if (driver != null) {      // si el driver existe
-            driver.quit();          // cierra el navegador
-            driver = null;          // reinicia para futuras llamadas
+        WebDriver driver = driverPool.get();
+        if (driver != null) {
+            driver.quit();
+            driverPool.remove();
         }
     }
 }

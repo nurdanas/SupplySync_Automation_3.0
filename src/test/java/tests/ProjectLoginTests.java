@@ -2,12 +2,14 @@ package tests;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginDataProvider;
 import pages.ProjectLoginPages;
 import utils.BaseUI;
+import utils.ConfigurationReader;
 import utils.Driver;
 
 @Test (groups = "regression")
@@ -16,15 +18,14 @@ public class ProjectLoginTests  extends BaseUI {
 
     @BeforeMethod
     public void setUpTest() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         loginPage = new ProjectLoginPages();
-
     }
 
     @AfterMethod
     public void tearDown() {
         Driver.closeDriver();
     }
-
 
     @Test(dataProvider = "invalidLoginData", dataProviderClass = LoginDataProvider.class)
     public void invalidLoginTest(String email, String password) {
@@ -35,7 +36,7 @@ public class ProjectLoginTests  extends BaseUI {
     }
 
 
-    @Test(dataProvider = "validLoginData", dataProviderClass = LoginDataProvider.class)
+    @Test(groups = "examples", dataProvider = "validLoginData", dataProviderClass = LoginDataProvider.class)
     public void successfulLoginTest(String email, String password) {
         loginPage.login(email, password);
 
@@ -44,7 +45,7 @@ public class ProjectLoginTests  extends BaseUI {
     }
 
 
-    @Test
+    @Test (groups = "smoke")
     public void adminIsAbleToLogout() {
         loginPage.login("admin@codewise.com", "codewise123");
 

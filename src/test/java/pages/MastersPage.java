@@ -71,7 +71,7 @@ public class MastersPage extends BaseUI {
 
         for (WebElement element : emailElements) {
             String actualEmail = element.getText();
-            System.out.println("Checking email: " + actualEmail);
+//            System.out.println("Checking email: " + actualEmail);
             if (actualEmail.equals(emailSaved)) {
                 found = true;
                 break;
