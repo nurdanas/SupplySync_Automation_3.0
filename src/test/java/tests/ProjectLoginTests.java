@@ -10,6 +10,7 @@ import pages.ProjectLoginPages;
 import utils.BaseUI;
 import utils.Driver;
 
+@Test (groups = "regression")
 public class ProjectLoginTests  extends BaseUI {
     ProjectLoginPages loginPage;
 

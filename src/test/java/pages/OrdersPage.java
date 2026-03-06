@@ -45,8 +45,8 @@ public class OrdersPage extends BaseUI {
         clearAndSendKeys(searchName, name);
         waitAndClick(city);
         waitAndClick(firstCity);
-        waitAndSendKeys(fromInput, fromDate);
-        waitAndSendKeys(toInput, toDate);
+        clearAndSendKeys(fromInput, fromDate);
+        clearAndSendKeys(toInput, toDate);
         waitAndClick(deliveryType);
         waitAndClick(firstDeliveryOption);
     }

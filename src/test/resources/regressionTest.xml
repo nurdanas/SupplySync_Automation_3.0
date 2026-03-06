@@ -12,6 +12,7 @@
             <class name="tests.RegionsTests"/>
             <class name="tests.OrdersTest"/>
             <class name="tests.MastersTests"/>
+            <class name="tests.ProjectLoginTests"></class>
         </classes>
     </test>
 </suite>
