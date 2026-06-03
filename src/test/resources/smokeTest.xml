@@ -9,7 +9,7 @@
 
         <classes>
             <class name="tests.MainPageTests"/>
-            <class name="tests.OrdersTest"></class>
+            <class name="tests.OrdersTests"></class>
             <class name="tests.MastersTests"></class>
             <class name="tests.RegionsTests"></class>
             <class name="tests.BranchTests"></class>
